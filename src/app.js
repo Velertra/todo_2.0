@@ -1,4 +1,4 @@
-class Task {
+class toDoTasks {
     constructor(title, description, dueDate, priority) {
         this.tile = title;
         this.description = description;
@@ -7,6 +7,18 @@ class Task {
     }
 }
 
-const task1 = new Task("Complete Project", "Finish coding the project", "2023-08-31", "High");
+const toDoTasks1 = new toDoTasks("Complete Project", "Finish coding the project", "2023-08-31", "High");
 
-console.log(task1);
+console.log(toDoTasks1); 
+
+
+class Projects {
+    constructor(...args){
+       // this.home = home;
+        this.args = args;
+    }
+}
+
+const projectList = new Projects('one', 'two', 'three', 'four');
+
+console.log(projectList);

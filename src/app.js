@@ -22,3 +22,16 @@ class Projects {
 const projectList = new Projects('one', 'two', 'three', 'four');
 
 console.log(projectList);
+
+
+function createBtn(domLocation, ...para){
+    for(const text of para) { 
+        let btn = document.createElement('button');
+        btn.setAttribute('id', text);
+        btn.textContent = 'text';
+        domLocation.appendChild(btn);
+    }
+}
+
+
+//createBtn(document.body, 'one', 'two', 'three');

@@ -70,25 +70,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderButton = document.getElementById('home_btn');
         const sectionDiv = document.getElementById('section_div');
         const sectionInputs = document.querySelectorAll('input[name="section"]');
-        const selectedSectionpan = document.getElementById('selection_section');
-        const sectionDropdown = sectionDiv.querySelector('.section');
+        const selectedSectionSpan = document.getElementById('selection_section');
+        const sectionLabels = document.querySelectorAll('.section_btn');
+        //const sectionDropdown = sectionDiv.querySelectorAll('.section');
 
         sectionDiv.addEventListener('click', () => {
             try {
-                sectionDropdown.classList.toggle('active');
-            } catch(error) {
-                console.error('error toggling section visibility:', error);
+                sectionLabels.forEach(label => {
+                    label.classList.toggle('hidden');
+                });
+                console.log("btn Worked");
+            } catch (error) {
+                console.error('Error toggling section visibility:', error);
             }
         });
+        
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
             let selectedSection = 'default';
             sectionInputs.forEach(input => {
-                if(input.checked) {
+                try{
+                    if(input.checked) {
                     selectedSection = input.value;
                     console.log(selectedSection)
+                    }
+                }catch(error) {
+                    console.error('Error section input', error);
                 }
             });
 

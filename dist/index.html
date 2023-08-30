@@ -5,6 +5,37 @@
      <title>Getting Started</title>
    </head>
    <body>
+    <style>
+ 
+/*      new try on the dropdown in form */
+      .section {
+        display: none;
+        transition: display 0.3s ease-in-out; /* Add a smooth transition */
+      }
+
+      .section_div.active .section_btn {
+        display: block;
+      }
+
+      .section_btn {
+        cursor: pointer;
+       
+      }
+      .section {
+        display: none;
+        background-color: #f9f9f9;
+        border: 1px solid #8f1313;
+        padding: 10px;
+ 
+      }
+
+/* .section_btn:hover {
+   //Add hover styling 
+} */
+
+
+      </style>
+
     <div id="container" class="container">
       <div id="top_div" class="top_div">
         <button id="new_task" class="new_task">New Task</button>
@@ -22,7 +53,15 @@
         </div>  
       </div>
       <div id="form_container" class="form_container">
-        <form class="task_form" id="task_form">
+        <form id="task_form" class="task_form">
+         <div id="section_div" class="section_div">
+            <label id="section_btn" class="section_btn">
+              Folder:
+              <input type = "radio" id="section1" name="section" value="Section 1">Section 1
+              <input type = "radio" id="section2" name="section" value="Section 2">Section 2
+              <input type = "radio" id="section3" name="section" value="Section 3">Section 3
+            </label>
+          </div>
           <label for="title">Title:</label>
           <input type="text" id="title" class="title" placeholder="----"><br>
           <label for="description">Description:</label>

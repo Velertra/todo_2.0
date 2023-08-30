@@ -1,101 +1,124 @@
-/* 
-const toDoTasks1 = new toDoTasks("Complete Project", "Finish coding the project", "2023-08-31", "High");
-
-console.log(toDoTasks1); 
-
-
-class Projects {
-    constructor(...args){
-       // this.home = home;
-        this.args = args;
-    }
-}
-
-console.log(projectList);
-
-
-function createBtn(domLocation, ...para){
-    for(const text of para) { 
-        let btn = document.createElement('button');
-        btn.setAttribute('id', text);
-        btn.textContent = 'text';
-        domLocation.appendChild(btn);
-    }
-}
- */
-
-//createBtn(document.body, 'one', 'two', 'three');
-
 //todolist.js // saves form information to local storage while creating array for list. then parses information
 class TodoList {
     constructor() {
-        this.task = [];
+        this.section = {}; // Change to an object
     }
-    saveData(task) {
-        this.task.push(task)
-        localStorage.setItem('task', JSON.stringify(this.task));
+    createSection(sectionName) {
+        if(!this.section[sectionName]) {
+            this.section[sectionName] = [];
+        }
+    }
+    saveData(sectionName, task) {
+        if(!this.section[sectionName]) {
+            this.createSection(sectionName);
+        }
+        try{
+            this.section[sectionName].push(task);
+            //console.log('Saving Data:', this.section);
+            localStorage.setItem('tasks', JSON.stringify(this.section));
+        } catch(error){
+            console.error('Error saving data:', error);
+        }
     }
     loadSavedData() {
-        const taskString = localStorage.getItem('task');
-        if(taskString) {
-            this.task = JSON.parse(taskString);
+        try{
+            const tasksString = localStorage.getItem('tasks');
+            if(tasksString) {
+                this.section = JSON.parse(tasksString);
+            }
+        } catch(error) {
+            console.error('Error loading saved data:', error);
+        }     
+    }
+
+    renderAllTasks(section, container) {
+        try{
+        container.innerHTML = '';
+        for(const sectionName in this.section) {
+            const tasks = this.section[sectionName];
+            tasks.forEach(task => {
+                this.renderTask(task, container);
+            });
+        }
+        } catch(error) {
+            console.error('Error rendering tasks:', error);
+        }
+    }
+
+    renderTask(task, container) {
+        try{
+            const taskItem = document.createElement('div');
+            taskItem.className = 'task-item';
+            taskItem.innerHTML = `
+            <h2>${task.title}</h2>
+            <p>${task.description}</p>`
+            ;
+            container.appendChild(taskItem);
+        } catch(error) {
+            console.error('Error rendering task', error);
         }
     }
 }
 
-//form EventListener, form values. sends to array.
 document.addEventListener('DOMContentLoaded', () => {
     const todoListSection = new TodoList();
-    
+        try{
+        todoListSection.loadSavedData();
 
-    todoListSection.loadSavedData();
-    
-    const form = document.getElementById('task_form');
-    const taskContainer = document.getElementById('task_container');
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+        const form = document.getElementById('task_form');
+        const taskContainer = document.getElementById('task_container');
+        const renderButton = document.getElementById('home_btn');
+        const sectionDiv = document.getElementById('section_div');
+        const sectionInputs = document.querySelectorAll('input[name="section"]');
+        const selectedSectionpan = document.getElementById('selection_section');
+        const sectionDropdown = sectionDiv.querySelector('.section');
 
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const dueDate = document.getElementById('due_date').value;
-        const priority = document.getElementById('priority').value;
-        const notes = document.getElementById('notes').value;
-
-        const task = {
-            title,
-            description,
-            dueDate,
-            priority,
-            notes
-        };
-
-        todoListSection.saveData(task);
-
-        form.reset();
-    });
-    const renderButton = document.getElementById('home_btn');
-    renderButton.addEventListener('click', () => {
-        renderAllTasks(todoListSection.task, taskContainer)
-    });
-
-    function renderAllTasks(tasks, container) {
-        container.innerHTML = '';
-        tasks.forEach(task => {
-            renderTask(task, container);
+        sectionDiv.addEventListener('click', () => {
+            try {
+                sectionDropdown.classList.toggle('active');
+            } catch(error) {
+                console.error('error toggling section visibility:', error);
+            }
         });
-    }
 
-    function renderTask(task, container) {
-        const taskItem = document.createElement('div');
-        taskItem.className = 'task-item';
-        taskItem.innerHTML = `
-        <h2>${task.title}</h2>
-        <p>${task.description}</p>`
-        ;
-    container.appendChild(taskItem);
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let selectedSection = 'default';
+            sectionInputs.forEach(input => {
+                if(input.checked) {
+                    selectedSection = input.value;
+                    console.log(selectedSection)
+                }
+            });
+
+            try {
+
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const dueDate = document.getElementById('due_date').value;
+                const priority = document.getElementById('priority').value;
+                const notes = document.getElementById('notes').value;
+
+                const task = {
+                    title,
+                    description,
+                    dueDate,
+                    priority,
+                    notes
+                };
+
+                todoListSection.saveData(selectedSection, task);
+                form.reset();
+            } catch(error) {
+                console.error('Error submitting form:', error);
+            }
+        });
+
+        renderButton.addEventListener('click', () => {
+            todoListSection.renderAllTasks(todoListSection.section, taskContainer);
+        });
+    } catch(error) {
+        console.error('Error during initialization:', error);
     }
 });
-
-console.log(localStorage.task);
-

@@ -25,9 +25,8 @@
         background-color: #bca521;
         cursor: pointer;
        
-      } */ 
+      } 
 
-      /* Initial state for hidden radio inputs */
       .section_btn {
         display: none;
       }
@@ -36,54 +35,55 @@
         display: block;
       }
 
-/* .section_btn:hover {
-   //Add hover styling 
-} */
-
-
+      .section_btn:hover {
+        //Add hover styling 
+      } */
       </style>
-
-    <div id="container" class="container">
-      <div id="top_div" class="top_div">
-        <button id="new_task" class="new_task">New Task</button>
-        <button id="task_time" class="task_time">------</button>
-      </div>
-      <div id="mid_div" class="mid_div">
-        <button id="new_folder" class="new_folder">New Folder</button>
-      </div>
-      <div id="bottom_div" class="bottom_div">
-        <div id="task_container" class="task_container">
-          
-        </div>
-        <div id="home_container" class="home_container">
-          <button id="home_btn" class="home_btn">Home</button>
-        </div>  
-      </div>
-      <div id="form_container" class="form_container">
-        <form id="task_form" class="task_form">
-         <div id="section_div" class="section_div">Folder:
-            <label id="section_btn" class="section_btn">
-              
-              <input type = "radio" id="section1" name="section" value="Section 1">Section 1
-              <input type = "radio" id="section2" name="section" value="Section 2">Section 2
-              <input type = "radio" id="section3" name="section" value="Section 3">Section 3
-            </label>
-            <div></div>
+        <div id="container" class="container">
+          <div id="top_div" class="top_div">
+            <button id="new_task" class="new_task">New Task</button>
+            <button id="task_time" class="task_time">------</button>
           </div>
-          <label for="title">Title:</label>
-          <input type="text" id="title" class="title" placeholder="----"><br>
-          <label for="description">Description:</label>
-          <input type="text" id="description" class="description" placeholder="----"><br>
-          <label for="due_date">Finish By:</label>
-          <input type="text" id="due_date" class="due_date" placeholder="----"><br>
-          <label for="priority">Priority:</label>
-          <input type="text" id="priority" class="priority" placeholder="----"><br>
-          <label for="notes">Notes:</label>
-          <input type="text" id="notes" class="notes" placeholder="----"><br>
-          <button type="submit" id="task_submit" class="task_submit">Get Values</button>
-        </form>
-      </div>
-    </div>
-    <script src="main.js"></script>
+          <div id="mid_div" class="mid_div">
+            <button id="new_folder" class="new_folder">New Folder</button>
+          </div>
+          <div id="bottom_div" class="bottom_div">
+            <div id="task_container" class="task_container">
+              
+            </div>
+            <div id="home_container" class="home_container">
+              <button id="home_btn" class="home_btn">Home</button>
+            </div>  
+          </div>
+          <div id="form_container" class="form_container">
+            <form id="task_form" class="task_form">
+              <label for="sections">Select Section:</label>
+              <select id="sections" name="sections">
+                <option value="section 1">Section 1</option>
+                <option name="sections" value="section 2">Section 2</option>
+              </select>
+              <!-- <div id="section_div" class="section_div">Folder:
+                <label id="section_btn" class="section_btn">
+                  
+                  <input type = "radio" id="section1" name="section" value="Section 1">Section 1
+                  <input type = "radio" id="section2" name="section" value="Section 2">Section 2
+                  <input type = "radio" id="section3" name="section" value="Section 3">Section 3
+                </label>
+              </div> -->
+              <label for="title">Title:</label>
+              <input type="text" id="title" class="title" placeholder="----"><br>
+              <label for="description">Description:</label>
+              <input type="text" id="description" class="description" placeholder="----"><br>
+              <label for="due_date">Finish By:</label>
+              <input type="text" id="due_date" class="due_date" placeholder="----"><br>
+              <label for="priority">Priority:</label>
+              <input type="text" id="priority" class="priority" placeholder="----"><br>
+              <label for="notes">Notes:</label>
+              <input type="text" id="notes" class="notes" placeholder="----"><br>
+              <button type="submit" id="task_submit" class="task_submit">Get Values</button>
+            </form>
+          </div>
+        </div>
+      <script src="main.js"></script>
    </body>
  </html>

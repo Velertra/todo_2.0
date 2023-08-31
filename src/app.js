@@ -68,23 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('task_form');
         const taskContainer = document.getElementById('task_container');
         const renderButton = document.getElementById('home_btn');
-        const sectionDiv = document.getElementById('section_div');
-        const sectionInputs = document.querySelectorAll('input[name="section"]');
-        const selectedSectionSpan = document.getElementById('selection_section');
-        const sectionLabels = document.querySelectorAll('.section_btn');
-        //const sectionDropdown = sectionDiv.querySelectorAll('.section');
-
-        sectionDiv.addEventListener('click', () => {
-            try {
-                sectionLabels.forEach(label => {
-                    label.classList.toggle('hidden');
-                });
-                console.log("btn Worked");
-            } catch (error) {
-                console.error('Error toggling section visibility:', error);
-            }
-        });
-        
+        const sectionInputs = document.querySelectorAll('option[name="sections"]');
+        const sectionsSelect = document.getElementById('sections')
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -92,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let selectedSection = 'default';
             sectionInputs.forEach(input => {
                 try{
-                    if(input.checked) {
+                    if(input.selected) {
                     selectedSection = input.value;
                     console.log(selectedSection)
                     }

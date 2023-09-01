@@ -1,7 +1,7 @@
 //todolist.js // saves form information to local storage while creating array for list. then parses information
-class TodoList {
+/* class TodoList {
     constructor() {
-        this.section = {}; // Change to an object
+        this.section = {};
     }
     createSection(sectionName) {
         if(!this.section[sectionName]) {
@@ -14,7 +14,6 @@ class TodoList {
         }
         try{
             this.section[sectionName].push(task);
-            //console.log('Saving Data:', this.section);
             localStorage.setItem('tasks', JSON.stringify(this.section));
         } catch(error){
             console.error('Error saving data:', error);
@@ -110,9 +109,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         renderButton.addEventListener('click', () => {
+            try{
             todoListSection.renderAllTasks(todoListSection.section, taskContainer);
+            } catch(error) {
+                console.error('Error with renderButton EventListener', error);
+            }
         });
     } catch(error) {
         console.error('Error during initialization:', error);
     }
 });
+
+class FormHandlers {
+    constructor() {
+        this.todoList = new TodoList();
+        
+    }
+} */

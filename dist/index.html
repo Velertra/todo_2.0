@@ -6,7 +6,6 @@
    </head>
    <body>
     <style>
- 
 /*      new try on the dropdown in form */
 /*       .section_div {
         visibility: hidden;
@@ -21,11 +20,7 @@
         opacity: 1;
       }
 
-      .section_btn {
-        background-color: #bca521;
-        cursor: pointer;
-       
-      } 
+      
 
       .section_btn {
         display: none;
@@ -38,6 +33,27 @@
       .section_btn:hover {
         //Add hover styling 
       } */
+
+      .section_btn {
+        display: none;
+      }
+      
+      .section_btn.hidden {
+        display: block;
+      }
+
+      .form_container {
+        display: none;
+      }
+
+      .form_container.hidden {
+        display: block;
+      }
+
+      
+
+
+
       </style>
         <div id="container" class="container">
           <div id="top_div" class="top_div">
@@ -46,7 +62,15 @@
           </div>
           <div id="mid_div" class="mid_div">
             <button id="new_folder" class="new_folder">New Folder</button>
-            <div id="folder_container" class="folder_container"></div>
+            <div id="folder_container" class="folder_container">
+              <div id="section_div" class="section_div">Folder:
+                <label id="section_btn" class="section_btn">
+                  <input type="radio" id="section1" name="section" value="section1">Section1
+                  <input type="radio" id="section2" name="section" value="section2">Section2
+                  <input type="radio" id="section3" name="section" value="section3">Section3
+                </label>
+              </div>
+            </div>
           </div>
           <div id="bottom_div" class="bottom_div">
             <div id="task_container" class="task_container">
@@ -58,19 +82,11 @@
           </div>
           <div id="form_container" class="form_container">
             <form id="task_form" class="task_form">
-              <label for="sections">Select Section:</label>
-              <select id="sections" name="sections">
+              <label for="folder_selections">Select Section:</label>
+              <select id="folder_selections" name="folder_selections">
                 <option value="section 1">Section 1</option>
-                <option name="sections" value="section 2">Section 2</option>
+                <option value="section 2">Section 2</option>
               </select>
-              <!-- <div id="section_div" class="section_div">Folder:
-                <label id="section_btn" class="section_btn">
-                  
-                  <input type = "radio" id="section1" name="section" value="Section 1">Section 1
-                  <input type = "radio" id="section2" name="section" value="Section 2">Section 2
-                  <input type = "radio" id="section3" name="section" value="Section 3">Section 3
-                </label>
-              </div> -->
               <label for="title">Title:</label>
               <input type="text" id="title" class="title" placeholder="----"><br>
               <label for="description">Description:</label>

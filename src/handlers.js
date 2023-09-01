@@ -1,7 +1,8 @@
+
 class TodoList {
     constructor() {
         this.sectionArray = {};
-        this.sectionInputs = document.querySelectorAll('option[name="sections"]');
+        this.sectionInputs = document.querySelectorAll('option[name="select_folder"]');
     }
     createSection(sectionName) {
         try{
@@ -13,7 +14,6 @@ class TodoList {
         }
     }
     createTaskArray(){
-
         let selectedSection = 'default';
         this.sectionInputs.forEach(input => {
             try{
@@ -72,7 +72,7 @@ class TodoList {
              
             
         try{
-            console.log(task)
+            //console.log(task)
 
             const taskItem = document.createElement('div');
             taskItem.className = `${task}`;
@@ -92,25 +92,28 @@ class TodoList {
                     this.renderTask(task, container);
                    
                 });
-                this.ShowFolders(this.sectionArray);
+                //this.ShowFolders(this.sectionArray);
             }
         } catch(error) {
             console.error('Error rendering all tasks', error);
         }
     }
-    ShowFolders(section){
+    /* showFolders(section){
         try{
             let test = new TodoList();
             const sectionContainer = document.getElementById('folder_container');
             sectionContainer.innerHTML = '';
-            console.log(this.sectionArray)
+            //console.log(this.sectionArray)
             const keyArray = Object.keys(section);
-            console.log(typeof keyArray)
+            //console.log(typeof keyArray)
             test.renderTask(keyArray, sectionContainer);
 
         } catch(error) {
             console.error('Error displaying DOMinfo', error);
         }
+    } */
+    newFolder(){
+
     }
 
 };
@@ -121,8 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const todoListSection = new TodoList();
         try{
         const form = document.getElementById('task_form');
+        const formSection = document.querySelectorAll('.form_container');
         const taskContainer = document.getElementById('task_container');
         const renderButton = document.getElementById('home_btn');
+        //dropdowns
+        const displayFolders = document.getElementById('section_div');
+        const folderLabels = document.querySelectorAll('.section_btn');
+        //
+        const newTask = document.getElementById('new_task');
+
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -136,9 +146,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error with renderButton EventListener', error);
             }
         });
+        displayFolders.addEventListener('click', () => {
+            folderLabels.forEach(label => {
+                label.classList.toggle('hidden');
+            })
+        })
+        newTask.addEventListener('click', () => {
+            formSection.forEach(input => {
+                input.classList.toggle('hidden');
+            })
+            console.log('just checking')
+        })
+
+       /*  newFolderBtn.addEventListener("change", (e) => {
+            
+            console.log(e);
+        }) */
+
     } catch(error) {
         console.error('Error during initialization:', error);
     }
 });
 
-
+/* document.addEventListener('DOMContentLoaded', () => {
+    newFolderBtn.addEventListener("change", function(e) {
+        console.log(e);
+    })
+}); */

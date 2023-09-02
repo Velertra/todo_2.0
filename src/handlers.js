@@ -3,11 +3,23 @@ class TodoList {
     constructor() {
         this.sectionArray = {};
         this.trialArray = {};
-        this.sectionInputs = document.querySelectorAll('option[name="folder_choices"]');
+       
+    }
+    createNewFolderDivs(folderName) {
+        //let containerDiv = document.getElementById('')
+        let folderInput = document.createElement('option');
+        folderInput.setAttribute('name', 'folder_choices');
+        folderInput.setAttribute('value',folderName);
+        folderInput.textContent = folderName;
+        folder_selections.appendChild(folderInput);
+        let folderDiv = document.createElement('button');
+        folderDiv.setAttribute('id', 'new_folder_div');
+        folderDiv.innerHTML = folderName;
+        
+        section_div.appendChild(folderDiv);
     }
     createSection(sectionName) {
         try{
-            console.log(this.sectionArray)
             if(!this.sectionArray[sectionName]) {
                 this.sectionArray[sectionName] = [];
             } 
@@ -15,12 +27,16 @@ class TodoList {
             console.error('Error creating section', error);
         }
     }
+    //
     createTaskArray(){
         let selectedSection = 'default';
+        this.sectionInputs = document.querySelectorAll('option[name="folder_choices"]');
+        console.log(this.sectionInputs);
         this.sectionInputs.forEach(input => {
             try{
                 if(input.selected) {
                 selectedSection = input.value;
+                console.log(selectedSection);
                 
                 }
             }catch(error) {
@@ -96,20 +112,6 @@ class TodoList {
             console.error('Error rendering all tasks', error);
         }
     }
-    createNewFolder(information) {
-        //let tester = new TodoList();
-        
-        //for(let i = 0; i < this.sectionArray.length; i++) {
-            //this.sectionArray[information] = {};
-            let key = this.trialArray;
-            key[information] = {};
-            console.log(this.trialArray)
-            let combineArr = [...this.sectionArray, ...this.trialArray];
-            this.saveData(combineArr);
-        //}
-        
-
-    }
 };
 /* 
 let neededForDisplayRender = TodoList();
@@ -164,8 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(e.key === "Enter") {
                 e.preventDefault();
                 let utility = new TodoList();
-                //console.log(typeof folderText.value)
-                utility.createNewFolder(folderText.value);
+                utility.createNewFolderDivs(folderText.value);
                 folderText.value = '';
             }
         })

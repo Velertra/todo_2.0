@@ -2,10 +2,12 @@
 class TodoList {
     constructor() {
         this.sectionArray = {};
-        this.sectionInputs = document.querySelectorAll('option[name="select_folder"]');
+        this.trialArray = {};
+        this.sectionInputs = document.querySelectorAll('option[name="folder_choices"]');
     }
     createSection(sectionName) {
         try{
+            console.log(this.sectionArray)
             if(!this.sectionArray[sectionName]) {
                 this.sectionArray[sectionName] = [];
             } 
@@ -19,6 +21,7 @@ class TodoList {
             try{
                 if(input.selected) {
                 selectedSection = input.value;
+                
                 }
             }catch(error) {
                 console.error('Error section input', error);
@@ -39,7 +42,6 @@ class TodoList {
                 notes:this.notes
             };
             this.saveData(selectedSection, task);
-            //bring in form div for now
             let form = document.getElementById('task_form')
 
             form.reset();
@@ -69,11 +71,7 @@ class TodoList {
         }
     }
     renderTask(task, container) {
-             
-            
         try{
-            //console.log(task)
-
             const taskItem = document.createElement('div');
             taskItem.className = `${task}`;
             taskItem.innerHTML = `<h2>${task}</h2>`
@@ -98,27 +96,25 @@ class TodoList {
             console.error('Error rendering all tasks', error);
         }
     }
-    /* showFolders(section){
-        try{
-            let test = new TodoList();
-            const sectionContainer = document.getElementById('folder_container');
-            sectionContainer.innerHTML = '';
-            //console.log(this.sectionArray)
-            const keyArray = Object.keys(section);
-            //console.log(typeof keyArray)
-            test.renderTask(keyArray, sectionContainer);
-
-        } catch(error) {
-            console.error('Error displaying DOMinfo', error);
-        }
-    } */
-    newFolder(){
+    createNewFolder(information) {
+        //let tester = new TodoList();
+        
+        //for(let i = 0; i < this.sectionArray.length; i++) {
+            //this.sectionArray[information] = {};
+            let key = this.trialArray;
+            key[information] = {};
+            console.log(this.trialArray)
+            let combineArr = [...this.sectionArray, ...this.trialArray];
+            this.saveData(combineArr);
+        //}
+        
 
     }
-
 };
+/* 
+let neededForDisplayRender = TodoList();
+neededForDisplayRender.loadSavedData(); */
 
-//TodoList.ShowFolders();
 
 document.addEventListener('DOMContentLoaded', () => {
     const todoListSection = new TodoList();
@@ -127,13 +123,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const formSection = document.querySelectorAll('.form_container');
         const taskContainer = document.getElementById('task_container');
         const renderButton = document.getElementById('home_btn');
-        //dropdowns
+        //dropdowns/hidden variables
         const displayFolders = document.getElementById('section_div');
-        const folderLabels = document.querySelectorAll('.section_btn');
-        //
-        const newTask = document.getElementById('new_task');
+        const folderLabelBtn = document.querySelectorAll('.section_btn');
+        const newTaskBtn = document.getElementById('new_task');
+        const hiddenBtn = document.querySelectorAll('[name="hide_button"]');
+        const newFolderBtn = document.getElementById('new_folder');
+        const folderTextBtn  = document.querySelectorAll('.folder_text');
+        const folderText = document.getElementById('folder_text');
 
-
+       
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             todoListSection.createTaskArray();
@@ -147,29 +146,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         displayFolders.addEventListener('click', () => {
-            folderLabels.forEach(label => {
+            folderLabelBtn.forEach(label => {             //remember its the div not a button
                 label.classList.toggle('hidden');
             })
         })
-        newTask.addEventListener('click', () => {
+        newTaskBtn.addEventListener('click', () => {
             formSection.forEach(input => {
                 input.classList.toggle('hidden');
             })
-            console.log('just checking')
         })
-
-       /*  newFolderBtn.addEventListener("change", (e) => {
-            
-            console.log(e);
-        }) */
-
+        newFolderBtn.addEventListener('click', () => {
+            folderTextBtn.forEach(input => {
+                input.classList.toggle('hidden');
+            })
+        })
+        folderText.addEventListener("keydown", function(e) {
+            if(e.key === "Enter") {
+                e.preventDefault();
+                let utility = new TodoList();
+                //console.log(typeof folderText.value)
+                utility.createNewFolder(folderText.value);
+                folderText.value = '';
+            }
+        })
     } catch(error) {
         console.error('Error during initialization:', error);
     }
 });
-
-/* document.addEventListener('DOMContentLoaded', () => {
-    newFolderBtn.addEventListener("change", function(e) {
-        console.log(e);
-    })
-}); */

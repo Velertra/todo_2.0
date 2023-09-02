@@ -10,7 +10,7 @@
 /*       .section_div {
         visibility: hidden;
         transition: display 0.3s ease-in-out; 
-        background-color: blueviolet;
+        background-reset: blueviolet;
         border: 1px solid #8f1313;
         padding: 10px;
       }
@@ -50,6 +50,14 @@
         display: block;
       }
 
+      .folder_text {
+        display: none;
+      }
+
+      .folder_text.hidden {
+        display: block;
+      }
+
       
 
 
@@ -57,17 +65,20 @@
       </style>
         <div id="container" class="container">
           <div id="top_div" class="top_div">
-            <button id="new_task" class="new_task">New Task</button>
+            <button id="new_task" class="new_task" >New Task</button>
             <button id="task_time" class="task_time">------</button>
           </div>
           <div id="mid_div" class="mid_div">
-            <button id="new_folder" class="new_folder">New Folder</button>
+            <div id="text_div" class="text_div">  
+                <input type="text" id="folder_text" class="folder_text" placeholder="---------">
+            </div>  
             <div id="folder_container" class="folder_container">
               <div id="section_div" class="section_div">Folder:
-                <label id="section_btn" class="section_btn">
-                  <input type="radio" id="section1" name="section" value="section1">Section1
-                  <input type="radio" id="section2" name="section" value="section2">Section2
-                  <input type="radio" id="section3" name="section" value="section3">Section3
+                <label name="hide" id="section_btn" class="section_btn">
+                  <button id="new_folder" class="new_folder" name="new_folder">New Folder</button>
+                  <input type="button" id="section1" name="section" value="section1">
+                  <input type="button" id="section2" name="section" value="section2">
+                  <input type="button" id="section3" name="section" value="section3">
                 </label>
               </div>
             </div>
@@ -80,12 +91,12 @@
               <button id="home_btn" class="home_btn">Home</button>
             </div>  
           </div>
-          <div id="form_container" class="form_container">
+          <div name="hide" id="form_container" class="form_container">
             <form id="task_form" class="task_form">
               <label for="folder_selections">Select Section:</label>
               <select id="folder_selections" name="folder_selections">
-                <option value="section 1">Section 1</option>
-                <option value="section 2">Section 2</option>
+                <option name="folder_choices" value="section 1">Section 1</option>
+                <option name="folder_choices" value="section 2">Section 2</option>
               </select>
               <label for="title">Title:</label>
               <input type="text" id="title" class="title" placeholder="----"><br>

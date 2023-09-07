@@ -1,6 +1,7 @@
 class TodoList {
     constructor() {
         this.sectionArray = [];
+        this.secondaryArrays = [];
         this.trialArray = {};
         this.title = document.getElementById('title');
         this.description = document.getElementById('description');
@@ -10,22 +11,22 @@ class TodoList {
         this.folderSelction  = document.getElementById('folder_selections');
         this.selectedSection = 'default';     
     }
-    createFolderArray(folderName) {
-        for(let x = 0; x <folderName; x++){
-            this.trialArray.push(folderName[x]);    //fix this so that it takes in var and adds divs/option
-            console.log(this.trialArray)
-        }
+    createFolderDivs(folderName) {
         let folderInput = document.createElement('option');
         folderInput.setAttribute('name', 'folder_choices');
         folderInput.setAttribute('id', 'folder_choices');
         folderInput.setAttribute('value',folderName);
         folderInput.textContent = folderName;
         folder_selections.appendChild(folderInput);
-        let folderDiv = document.createElement('input');
-        folderDiv.setAttribute('id', 'folder_pick');
+
+        let folderDiv = document.createElement('button');
         folderDiv.setAttribute('type', 'button');
-        folderDiv.innerHTML = `${folderDiv}`;
-        section_div.appendChild(folderDiv);
+        folderDiv.setAttribute('id', folderName);
+        folderDiv.setAttribute('name', folderName);
+        folderDiv.setAttribute('class', "folder_pick");
+        folderDiv.textContent = folderName;
+        section_btn.appendChild(folderDiv);
+        //this.pickFolder();
     }
     createTaskArray() {
         let titleTxt = this.title.value;
@@ -43,30 +44,32 @@ class TodoList {
             notes:notesTxt    
         };
         this.sectionArray.push(task);
-   //     this.setLocalStorage(task)
         document.getElementById('task_form').reset();
     }
  /*    setLocalStorage(tasks){
         if(localStorage.length === 0){
             localStorage.setItem('myData', JSON.stringify(tasks));
             this.sectionArray.push(tasks);
-            console.log(this.sectionArray);
         } else {
             this.sectionArray.push(tasks);
             localStorage.setItem('myData', JSON.stringify(this.sectionArray));
         }
     } */
-    renderTask2(){
-        //add if statement, if containers empty, dont dont this. (!task_container === 0?) i know not that. 
-        const taskItem = document.createElement('div');
-        const titleNames = this.sectionArray.map(input => input.title);
-        console.log(titleNames)
-        taskItem.classList = `${titleNames}`;
-        taskItem.innerHTML = `${titleNames}`
-        task_container.appendChild(taskItem);
+    renderTask2(display){
+        this.removeDivContainer()
+        for(const arrayOfChoice in  display){
+            const taskItem = document.createElement('div');
+            taskItem.setAttribute('id', "task_div");
+            taskItem.classList = display[arrayOfChoice].title;
+            taskItem.innerHTML = display[arrayOfChoice].title;
+            task_container.appendChild(taskItem);
+        }
     }
-    pickFolder(){
-
+    removeDivContainer(){
+        const container = document.getElementById('task_container');
+        while(container.firstChild) {
+            container.removeChild(container.firstChild)
+        }
     }
     loadSavedData() {
         try{
@@ -104,22 +107,51 @@ class TodoList {
             console.error('Error rendering all tasks', error);
         }
     }
+    pickFolder(){
+        const foldersInTopDiv = document.querySelectorAll('.folder_pick');  
+       
+       /*  foldersInTopDiv.forEach((input) => {
+            input.addEventListener('click', () => {
+                console.log(foldersInTopDiv[input])
+            })
+        }) */
+        /* foldersInTopDiv.forEach(input => {
+            input.addEventListener('click', (e) => {
+                //console.log(e.target.textContent);
+                if()
+            })
+        }) */
+        /* for(let x = 0; x < foldersInTopDiv.length; x++){
+            foldersInTopDiv[x].addEventListener('click', (e) => {
+                console.log(foldersInTopDiv[x]);
+                
+            })
+            if(x === 1){
+                    return;
+                }
+        } */
+    }
+    filterArray(arrChoice){
+        //this.secondaryArrays = [];
+        //let subArray = [];
+     /*    let newArray = this.sectionArray.filter(arr => arr.incudes(arrChoice));
+      
+ */ 
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     const todoListSection = new TodoList();
         try{
         const form = document.getElementById('task_form');
-        const formSection = document.querySelectorAll('.form_container');
-        const taskContainer = document.getElementById('task_container');
+        const formSection = document.getElementById('form_container');
         const renderButton = document.getElementById('home_btn');
-        //dropdowns/hidden variables
-        const displayFolders = document.getElementById('section_div');
-        const folderLabelBtn = document.querySelectorAll('.section_btn');
+        
+        const displayFolders = document.getElementById('open_folders');
+        const folderLabelBtn = document.getElementById('section_btn');
         const newTaskBtn = document.getElementById('new_task');
-        const hiddenBtn = document.querySelectorAll('[name="hide_button"]');
         const newFolderBtn = document.getElementById('new_folder');
-        const folderTextBtn  = document.querySelectorAll('.folder_text');
+        const folderTextBtn  = document.getElementById('folder_text');
         const folderText = document.getElementById('folder_text');
 
        
@@ -127,34 +159,33 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             todoListSection.createTaskArray();
         });
-
         renderButton.addEventListener('click', () => {
-            todoListSection.renderTask2();
-
-            
-        });
+            todoListSection.renderTask2(todoListSection.sectionArray);
+             });
         displayFolders.addEventListener('click', () => {
-            folderLabelBtn.forEach(label => {             //remember its the div not a button
-                label.classList.toggle('hidden');
-            })
+            folderLabelBtn.classList.toggle('hidden');
         })
         newTaskBtn.addEventListener('click', () => {
-            formSection.forEach(input => {
-                input.classList.toggle('hidden');
-            })
+            formSection.classList.toggle('hidden');
+            
         })
         newFolderBtn.addEventListener('click', () => {
-            folderTextBtn.forEach(input => {
-                input.classList.toggle('hidden');
-            })
+                folderTextBtn.classList.toggle('hidden');
         })
         folderText.addEventListener("keydown", function(e) {
+            
             if(e.key === "Enter") {
                 e.preventDefault();
-                let utility = new TodoList();
-                utility.createFolderArray(folderText.value);
+                //this.sectionArray.push(task);
+                todoListSection.sectionArray.push(folderText.value)
+                todoListSection.createFolderDivs(folderText.value);
                 folderText.value = '';
             }
+
+            //todoListSection.pickFolder();
+           /*  todoListSection.sectionArray.forEach(picks => {
+
+            }) */
         })
 
     } catch(error) {
@@ -163,66 +194,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-/* 
-
-class TodoList {
-    constructor(title) {
-        this.sectionArray = {};
-        this.trialArray = {};
-        this.title = document.getElementById('title');
-        this.description = document.getElementById('description');
-        this.dueDate = document.getElementById('due_date');
-        this.priority = document.getElementById('priority');
-        this.notes = document.getElementById('notes');
-       
-    }
-    createFolderArray(folderNames) {
-        for(let x = 0; x <folderNames; x++){
-            this.trialArray.push(folderName[x]);
-            console.log(this.trialArray)
-        }
-
-    }
-    createSection2(arrayKey){
-        if(arrayKey in this.trialArray){
-            this.trialArray[arrayKey] = []
-        }
-    }
-    createTaskArray() {
-        //pickFolder();              //set folder as key
-        let titleTxt = this.title.value;
-        let descriptionTxt = this.description.value;
-        let dueDateTxt = this.dueDate.value;
-        let priorityTxt = this.priority.value;
-        let notesTxt = this.notes.value; 
-        let folderSelction = document.getElementById('folder_selections');
-        const arrayKey = folderSelction.value;        
+document.addEventListener('click', function(e){
+    if(e.target.classList.value=='folder_pick'){
         
-        if(arrayKey in this.trialArray){
-            this.createSection2(arrayKey)
-        }
-        
-
-        const task = {
-            title:titleTxt,
-            description:descriptionTxt,
-            dueDate:dueDateTxt,
-            priority:priorityTxt,
-            notes:notesTxt
-        };
-
-        this.trialArray[arrayKey].push(task);
-
-        console.log(this.trialArray);
+        /* for(let x = 0; x < foldersInTopDiv.length; x++){
+            foldersInTopDiv[x].addEventListener('click', (e) => {
+                console.log(foldersInTopDiv[x]);
+                
+            })
+        }  */
+        const needToWork = new TodoList();
+        console.log(needToWork.sectionArray)
     }
-} */
+})
+

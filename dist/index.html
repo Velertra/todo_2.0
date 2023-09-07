@@ -6,33 +6,24 @@
    </head>
    <body>
     <style>
-/*      new try on the dropdown in form */
-/*       .section_div {
-        visibility: hidden;
-        transition: display 0.3s ease-in-out; 
-        background-reset: blueviolet;
-        border: 1px solid #8f1313;
-        padding: 10px;
+
+      .folder_pick {
+        /* Add button-like styles */
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* Button background color */
+        color: #fff; /* Text color */
+        border: 1px solid #007bff; /* Border color */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Change cursor on hover */
+        text-align: center;
+        text-decoration: none; /* Remove underlines */
+        user-select: none; /* Prevent text selection */
       }
+      .folder_pick:hover {
+      background-color: #0056b3; /* Change background color on hover */
+    }
 
-      .section_div.active {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      
-
-      .section_btn {
-        display: none;
-      }
-
-      .section_btn.hidden {
-        display: block;
-      }
-
-      .section_btn:hover {
-        //Add hover styling 
-      } */
 
       .section_btn {
         display: none;
@@ -73,13 +64,12 @@
                 <input type="text" id="folder_text" class="folder_text" placeholder="---------">
             </div>  
             <div id="folder_container" class="folder_container">
-              <div id="section_div" class="section_div">Folder:
-                <label name="hide" id="section_btn" class="section_btn">
-                  <button id="new_folder" class="new_folder" name="new_folder">New Folder</button>
-                  <input type="button" id="folder_pick" name="folder_pick" value="section1">
-                  <input type="button" id="folder_pick" name="folder_pick" value="section2">
-                  <input type="button" id="folder_pick" name="folder_pick" value="section3">
-                </label>
+              <div id="section_div" class="section_div">
+                <button id="open_folders" class="open_folders">Folder</button>
+                <button id="new_folder" class="new_folder" name="new_folder">New Folder</button>
+                <div name="hide" id="section_btn" class="section_btn">
+                  
+                </div>
               </div>
             </div>
           </div>

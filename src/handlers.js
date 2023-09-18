@@ -8,8 +8,7 @@ class TodoList {
         this.dueDate = document.getElementById('due_date');
         this.priority = document.getElementById('priority');
         this.notes = document.getElementById('notes');
-        this.folderSelction  = document.getElementById('folder_selections');
-        this.selectedSection = 'default';     
+        this.folderSelction  = document.getElementById('folder_selections');  
         this.keySaver = 0;
         this.startKeySaver = '';
     }
@@ -22,7 +21,6 @@ class TodoList {
         folder_selections.appendChild(folderInput);
 
         let folderDiv = document.createElement('button');
-        //folderDiv.setAttribute('type', 'button');
         folderDiv.setAttribute('id', folderName);
         folderDiv.setAttribute('name', folderName);
         folderDiv.setAttribute('class', "folder_pick");
@@ -68,76 +66,93 @@ class TodoList {
             container.removeChild(container.firstChild)
         }
     } 
-    sortFolders(value){
-        this.secondaryArrays = [];
-    }
     saveToLocal(task, section){
         let test = JSON.stringify(task);
         localStorage.setItem(section, test); 
-        
-        
-        
     }
     storeLocalData(){
         let number = localStorage.getItem('NumberToStart');
         this.keySaver = Number(number);
     }
-
 };
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
         try{
-        const todoListSection = new TodoList();
-        const foldersClass = new FolderClass();
+        const toDoListClass = new TodoList();
         const form = document.getElementById('task_form');
         const formSection = document.getElementById('form_container');
         const renderButton = document.getElementById('home_btn');
-        
         const displayFolders = document.getElementById('open_folders');
         const folderLabelBtn = document.getElementById('section_btn');
         const newTaskBtn = document.getElementById('new_task');
         const newFolderBtn = document.getElementById('new_folder');
-        const folderTextBtn  = document.getElementById('folder_text');
         const folderText = document.getElementById('folder_text');
-        
-       
        
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            todoListSection.createTaskArray();
+            toDoListClass.createTaskArray();
         });
         renderButton.addEventListener('click', () => {
-            todoListSection.renderTask2(todoListSection.sectionArray);
+            toDoListClass.renderTask2(toDoListClass.sectionArray);
              });
-        displayFolders.addEventListener('click', () => {
+        /* displayFolders.addEventListener('click', () => {
             folderLabelBtn.classList.toggle('hidden');
-        })
+        }) */
         newTaskBtn.addEventListener('click', () => {
             formSection.classList.toggle('hidden');
             
         })
-        newFolderBtn.addEventListener('click', () => {
-                folderTextBtn.classList.toggle('hidden');
+        newFolderBtn.addEventListener('click', (e) => {
+                folderText.classList.toggle('hidden');
+                //console.log(folderText)
+              /*   document.addEventListener('click', (e) => {
+
+                //console.log(folderText)
+                      if(e.target !== folderText && e.target !== newFolderBtn){
+                        folderText.classList.toggle('hidden')
+                }  
+            })*/
+               
         })
         folderText.addEventListener("keydown", function(e) {
             if(e.key === "Enter") {
                 e.preventDefault();
-                todoListSection.folderNameArray.push(folderText.value)
-                todoListSection.createFolderDivs(folderText.value);
-                folderText.value = '';
-                
+                toDoListClass.folderNameArray.push(folderText.value)
+                toDoListClass.createFolderDivs(folderText.value);
+                folderText.value = '';   
+                //folderText.classList.toggle('none');
             }
-        
         })
-        todoListSection.storeLocalData();
-
+        toDoListClass.storeLocalData();
     } catch(error) {
         console.error('Error during initialization:', error);
     }
 });
 
+//function to have the folder text dissapear when something else is hit
+document.addEventListener('click', (event) => {
+    const folderText = document.getElementById('folder_text');
+    const newFolderBtn = document.getElementById('new_folder');
+    let clickedInsideDiv = false;
+    if (newFolderBtn == event.target ) {
+        clickedInsideDiv = true;
+      }
+    if (!clickedInsideDiv && event.target !== folderText && folderText.classList.value == "folder_text hidden") { 
+        folderText.classList.toggle('hidden');
+    }
+  });
+  
+  document.addEventListener('click', (event) => {
+    const formSection = document.getElementById('form_container');
+    const newTask = document.getElementById('new_task');
+    let clickedInsideDiv = false;
+    if (newTask == event.target ) {
+        clickedInsideDiv = true;
+      }
+    if (!clickedInsideDiv && event.target !== formSection && formSection.classList.value == "form_container hidden" && !formSection.contains(event.target)) { 
+        formSection.classList.toggle('hidden');
+    }
+  });
 
 class FolderClass {
     constructor(){
@@ -145,14 +160,11 @@ class FolderClass {
         this.eachFolder = document.querySelectorAll('.folder_pick');
     }
     addFolderBtn(value){
-        //this.createNewArray(value);
         const toDoClass = new TodoList();
         const folder = document.getElementById(value.innerHTML);
         folder.addEventListener('click', (e) => {
             this.createNewArray(folder);
-        })
-
-        
+        })        
     }
     createNewArray(value){
         const folderName = value.innerHTML;
@@ -166,9 +178,5 @@ class FolderClass {
             }
         }
         toDoClass.renderTask2(toDoClass.secondaryArrays)
-        console.log(toDoClass.secondaryArrays);
     }
-    sortArrays(value){
-    }
-
 }

@@ -2,6 +2,7 @@
  <html>
    <head>
      <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Getting Started</title>
    </head>
    <body>
@@ -11,9 +12,9 @@
         /* Add button-like styles */
         display: inline-block;
         padding: 10px 20px;
-        background-color: #007bff; /* Button background color */
+        background-color: red; /* Button background color */
         color: #fff; /* Text color */
-        border: 1px solid #007bff; /* Border color */
+        border: 1px solid red; /* Border color */
         border-radius: 5px; /* Rounded corners */
         cursor: pointer; /* Change cursor on hover */
         text-align: center;
@@ -21,17 +22,17 @@
         user-select: none; /* Prevent text selection */
       }
       .folder_pick:hover {
-      background-color: #0056b3; /* Change background color on hover */
+      background-color: rgb(104, 1, 1); /* Change background color on hover */
     }
 
 
-      .section_btn {
+    /*   .section_btn {
         display: none;
       }
       
       .section_btn.hidden {
         display: block;
-      }
+      } */
 
       .form_container {
         display: none;
@@ -49,9 +50,6 @@
         display: block;
       }
 
-      
-
-
 
       </style>
         <div id="container" class="container">
@@ -65,17 +63,14 @@
             </div>  
             <div id="folder_container" class="folder_container">
               <div id="section_div" class="section_div">
-                <button id="open_folders" class="open_folders">Folder</button>
                 <button id="new_folder" class="new_folder" name="new_folder">New Folder</button>
-                <div name="hide" id="section_btn" class="section_btn">
-                  
-                </div>
               </div>
+            </div>
+            <div name="hide" id="section_btn" class="section_btn"> 
             </div>
           </div>
           <div id="bottom_div" class="bottom_div">
             <div id="task_container" class="task_container">
-              
             </div>
             <div id="home_container" class="home_container">
               <button id="home_btn" class="home_btn">Home</button>

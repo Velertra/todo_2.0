@@ -1,0 +1,79 @@
+html{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+
+.container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top_div{
+    background-color: yellow;
+    display: flex;
+    justify-content: space-between;
+    padding: 4%;
+}
+
+.mid_div{
+    background-color: blue;
+    display: flex;
+    height: 10%;
+}
+
+.bottom_div{
+    background-color: yellow;
+    overflow: auto;
+    height: 100%;
+}
+
+.folder_text{
+    position: absolute;
+}
+
+.section_btn{
+    overflow: auto;
+    display: flex;
+}
+
+
+
+.task_container{
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+#task_div{
+    background-color: green;
+    min-width: 20vw;
+    max-height: 20vw;
+    max-width: 20vw;
+    min-height: 20vw;
+    margin: 1vw;
+}
+
+.form_container{
+    background-color: blue;
+    position: absolute;
+    top: 33%;
+    left: 33%;
+}
+
+.home_container{
+    position: absolute;
+    bottom: 10%;
+    left: 45%;
+}
+
+button{
+    background-color: red;
+}

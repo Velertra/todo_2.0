@@ -17,9 +17,9 @@
         border: 1px solid red; /* Border color */
         border-radius: 5px; /* Rounded corners */
         cursor: pointer; /* Change cursor on hover */
-        text-align: center;
-        text-decoration: none; /* Remove underlines */
-        user-select: none; /* Prevent text selection */
+        /* text-align: center;
+        text-decoration: none; 
+        user-select: none; */
       }
       .folder_pick:hover {
       background-color: rgb(104, 1, 1); /* Change background color on hover */
@@ -80,8 +80,7 @@
             <form id="task_form" class="task_form">
               <label for="folder_selections">Select Section:</label>
               <select id="folder_selections" name="folder_selections">
-                <option name="folder_choices" id="folder_choices" value="section 1">Section 1</option>
-                <option name="folder_choices" id="folder_choices" value="section 2">Section 2</option>
+                <option name="folder_choices" id="folder_choices" value="home">Home</option>
               </select>
               <label for="title">Title:</label>
               <input type="text" id="title" class="title" placeholder="----"><br>

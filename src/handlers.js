@@ -71,8 +71,20 @@ class TodoList {
         localStorage.setItem(section, test); 
     }
     storeLocalData(){
+        //get number of task to start from when loaded
         let number = localStorage.getItem('NumberToStart');
         this.keySaver = Number(number);
+        //get folder names when loaded
+        let folders = localStorage.getItem('FolderNames');
+        let parsedData = JSON.parse(folders);
+
+            for(let choice in parsedData){
+            this.createFolderDivs(parsedData[choice])
+            //const todoClass = new TodoList()
+            this.folderNameArray.push(parsedData[choice])
+        }
+        
+
     }
 };
 
@@ -81,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const toDoListClass = new TodoList();
         const form = document.getElementById('task_form');
         const formSection = document.getElementById('form_container');
-        const renderButton = document.getElementById('home_btn');
+        const homeBtn = document.getElementById('home_btn');
         const displayFolders = document.getElementById('open_folders');
         const folderLabelBtn = document.getElementById('section_btn');
         const newTaskBtn = document.getElementById('new_task');
@@ -92,32 +104,31 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             toDoListClass.createTaskArray();
         });
-        renderButton.addEventListener('click', () => {
-            toDoListClass.renderTask2(toDoListClass.sectionArray);
-             });
-        /* displayFolders.addEventListener('click', () => {
-            folderLabelBtn.classList.toggle('hidden');
-        }) */
+        homeBtn.addEventListener('click', () => {
+            let arr = ''
+            toDoListClass.secondaryArrays = [];
+            for(let x = 0; x < localStorage.length; x++){ 
+                const arrKey = localStorage.key(x)
+                if(arrKey !== 'NumberToStart' && arrKey !== "FolderNames"){
+                    const localString = localStorage.getItem(arrKey);
+                    arr = JSON.parse(localString);
+                    toDoListClass.secondaryArrays.push(arr);
+                }
+            }
+            toDoListClass.renderTask2(toDoListClass.secondaryArrays);
+        });
+      
         newTaskBtn.addEventListener('click', () => {
-            formSection.classList.toggle('hidden');
-            
+            formSection.classList.toggle('hidden');  
         })
         newFolderBtn.addEventListener('click', (e) => {
                 folderText.classList.toggle('hidden');
-                //console.log(folderText)
-              /*   document.addEventListener('click', (e) => {
-
-                //console.log(folderText)
-                      if(e.target !== folderText && e.target !== newFolderBtn){
-                        folderText.classList.toggle('hidden')
-                }  
-            })*/
-               
         })
         folderText.addEventListener("keydown", function(e) {
             if(e.key === "Enter") {
                 e.preventDefault();
                 toDoListClass.folderNameArray.push(folderText.value)
+                toDoListClass.saveToLocal(toDoListClass.folderNameArray, 'FolderNames');
                 toDoListClass.createFolderDivs(folderText.value);
                 folderText.value = '';   
                 //folderText.classList.toggle('none');
